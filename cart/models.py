@@ -38,3 +38,12 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('shop:product_detail', args=[self.id, self.slug])    
+    
+class contactIn(models.Model):
+    name=models.CharField(max_length=50)
+    email=models.CharField(max_length=50)
+    phone=models.CharField(max_length=50)
+    subject=models.CharField(max_length=50)
+    message=models.TextField()
+    def __str__(self):
+         return self.name

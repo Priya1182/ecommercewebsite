@@ -129,3 +129,5 @@ VENV_PATH = os.path.dirname(BASE_DIR)
 STATIC_ROOT = os.path.join(VENV_PATH,'static root')
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
+
+EMAIL_BACKEND ='django.core.mail.backends.console.EmailBackend'
