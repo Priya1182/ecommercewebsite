@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.conf.urls import url
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
@@ -6,8 +6,16 @@ from cart.models import Category,Product,contactIn
 
 
 # Create your views here.
-def index(request):
-    return render(request,'index.html')
+def index(request,category_slug=None):
+    category = None
+    categories = Category.objects.all()
+    products = Product.objects.filter(available=True)
+    if category_slug:
+        category = get_object_or_404(Category, slug=category_slug)
+        products = products.filter(category=category)
+    context = {'category': category, 'categories': categories, 'products': products}
+
+    return render(request,'index.html',context)
 
 def about(request):
     return render(request,'about.html')
@@ -27,8 +35,10 @@ def contact(request):
 
 
 
-def forgotpassword(request):
-    return render(request,'forgotpassword.html')
+def base(request):
+    categories = Category.objects.all()
+    context = {'categories': categories}
+    return render(request,'base.html',context)
 
 def login(request):
     if request.method == "POST":
@@ -77,4 +87,15 @@ def register(request):
     
 def logout(request):
     auth.logout(request)
-    return redirect('index')	    
+    return redirect('index')
+
+
+def product_detail(request):
+    products = Product.objects.filter(available=True)
+    #product = get_object_or_404(Product, id=id, slug=slug, available=True)
+    
+    context = {'products':products}
+    return render(request, 'single-product.html', context)
+
+
+

@@ -1,6 +1,9 @@
 from django.urls import path
 from cart import views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
 path('',views.index,name='index'),
@@ -9,7 +12,7 @@ path('contact',views.contact,name='contact'),
 path('register',views.register,name='register'),
 path("login",views.login,name="login"),
 path("logout",views.logout,name="logout"),
-path("forgotpassword",views.forgotpassword,name="forgotpassword"),
+path("product_detail",views.product_detail,name="product_detail"),
 
 # path("createvchargingslot",views.createvchargingslot,name="createvchargingslot"),
 # path("creatparkingslot",views.creatparkingslot,name="creatparkingslot"),
@@ -26,3 +29,5 @@ path('reset/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(),nam
  
 path('reset/done/',auth_views.PasswordResetCompleteView.as_view(),name='password_reset_complete'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
