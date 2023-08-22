@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.conf.urls import url
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
-from cart.models import Category,Product,contactIn
+from cart.models import Category,Product,contactIn,CartItem
 
 
 # Create your views here.
@@ -19,6 +19,12 @@ def index(request,category_slug=None):
 
 def about(request):
     return render(request,'about.html')
+
+def userprofile(request):
+    return render(request,'userprofile.html')
+
+def cart(request):
+    return render(request,'cart.html')
 
 def contact(request):
     if request.method == 'POST':
@@ -65,6 +71,7 @@ def register(request):
         first_name = request.POST['first_name']
         username = request.POST['mobile_number']
         email = request.POST['email']
+       
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
         if password == confirm_password:
@@ -90,12 +97,49 @@ def logout(request):
     return redirect('index')
 
 
-def product_detail(request):
-    products = Product.objects.filter(available=True)
-    #product = get_object_or_404(Product, id=id, slug=slug, available=True)
-    
-    context = {'products':products}
+
+def product_detail(request, id):
+    product = Product.objects.get(id=id)
+    context = {'product': product}
     return render(request, 'single-product.html', context)
+
+
+# cart/views.py
+
+
+def add_to_cart(request, id):
+    product = Product.objects.get(id=id)
+
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            # Get or create a CartItem instance for the user and product
+            cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
+            if not created:
+                cart_item.quantity += 1
+                cart_item.save()
+            return redirect('cart_view')
+        else:
+            # Redirect to the login page with a message
+            messages.info(request, "You need to log in to add items to your cart.")
+            return redirect('login')
+
+# def product_list(request, category_slug=None):
+#     category = None
+#     categories = Category.objects.all()
+#     products = Product.objects.filter(available=True)
+#     if category_slug:
+#         category = get_object_or_404(Category, slug=category_slug)
+#         products = products.filter(category=category)
+#     context = {'category': category, 'categories': categories, 'products': products}
+#     return render(request, 'shop/product/list.html', context)
+
+# def product_detail(request, id, slug):
+#     product = get_object_or_404(Product, id=id, slug=slug, available=True)
+#     #cart_product_form = CartAddProductForm()
+#     context = {'product': product}
+#     return render(request, 'shop/product/detail.html', context)
+
+
 
 
 

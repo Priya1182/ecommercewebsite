@@ -31,6 +31,7 @@
 	<link rel="stylesheet" href="/static/assets/css/main.css">
 	<!-- responsive -->
 	<link rel="stylesheet" href="/static/assets/css/responsive.css">
+	
 
 </head>
 <body>
@@ -78,9 +79,13 @@
 										<li><a href="shop.html">Shop</a></li>
 									</ul>
 								</li>
+								{% if user.is_authenticated %}
+								<li><a href="userprofile">Hello, {{user.first_name}}</a></li>
+								<li><a href="logout">Logout !</a></li>
+								{% else %}
 								<li><a href="login">Login</a></li>
 								<li><a href="register">Register</a></li>
-								
+								{% endif %}
 								<li><a href="shop.html">Category</a>
 									
 									<ul class="sub-menu">
@@ -205,6 +210,7 @@
 	<script src="/static/assets/js/sticker.js"></script>
 	<!-- main js -->
 	<script src="/static/assets/js/main.js"></script>
+	
 
 </body>
 </html>

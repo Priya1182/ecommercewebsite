@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product,contactIn
+from .models import Category, Product,contactIn,CartItem
 
 # Register your models here.
 
@@ -16,4 +16,5 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ['price', 'available']
     prepopulated_fields = {'slug': ('name',)}
 
-admin.site.register(contactIn)    
+admin.site.register(contactIn)
+admin.site.register(CartItem)     

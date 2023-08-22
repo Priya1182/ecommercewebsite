@@ -12,7 +12,11 @@ path('contact',views.contact,name='contact'),
 path('register',views.register,name='register'),
 path("login",views.login,name="login"),
 path("logout",views.logout,name="logout"),
-path("product_detail",views.product_detail,name="product_detail"),
+path("userprofile",views.userprofile,name="userprofile"),
+path("cart",views.cart,name="cart"),
+path("<int:id>",views.product_detail,name="product_detail"),
+path('add_to_cart/<int:id>/', views.add_to_cart, name='add_to_cart'),
+
 
 # path("createvchargingslot",views.createvchargingslot,name="createvchargingslot"),
 # path("creatparkingslot",views.creatparkingslot,name="creatparkingslot"),
