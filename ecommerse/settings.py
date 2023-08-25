@@ -29,7 +29,7 @@ SECRET_KEY = 'v8ay2a-3)jzybug_0u9c&k4ltt!0dg%b(qu88^i+(jm$ms&(&m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ecommerse-pglu.onrender.com']
 
 
 # Application definition
