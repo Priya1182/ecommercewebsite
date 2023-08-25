@@ -78,13 +78,25 @@ WSGI_APPLICATION = 'ecommerse.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR,'sqlite3'),
+#     }
+# }
+
+# settings.py
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR,'sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ecommerse_django_render',  # Database name from the URL
+        'USER': 'ecommerse_django_render_user',  # Database user from the URL
+        'PASSWORD': '5nZXnnqnGC1E5LWSbFYzIzuvtvOXtRAZ',  # Database password from the URL
+        'HOST': 'dpg-cjk3bbmphtvs73f9cfo0-a.oregon-postgres.render.com',  # Database host from the URL
+        'PORT': '',  # Port (usually not specified in the URL, leave it empty)
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
