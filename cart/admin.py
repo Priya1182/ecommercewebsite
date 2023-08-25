@@ -17,4 +17,5 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 admin.site.register(contactIn)
-admin.site.register(CartItem)     
+admin.site.register(CartItem)
+     

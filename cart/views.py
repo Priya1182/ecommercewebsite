@@ -24,7 +24,14 @@ def userprofile(request):
     return render(request,'userprofile.html')
 
 def cart(request):
-    return render(request,'cart.html')
+    user = request.user
+    cart_items = CartItem.objects.filter(user=user)
+    for item in cart_items:
+        item.total_price = item.product.price * item.quantity
+    total_cart_value = sum(item.product.price * item.quantity for item in cart_items)
+    shipping_fee = 100
+    final_cart_value =total_cart_value + shipping_fee   
+    return render(request,'cart.html',{'cart_items': cart_items,'total_cart_value': total_cart_value,'final_cart_value':final_cart_value,'shipping_fee':shipping_fee})
 
 def contact(request):
     if request.method == 'POST':
@@ -117,27 +124,27 @@ def add_to_cart(request, id):
             if not created:
                 cart_item.quantity += 1
                 cart_item.save()
-            return redirect('cart_view')
+            return redirect('cart')
         else:
             # Redirect to the login page with a message
             messages.info(request, "You need to log in to add items to your cart.")
             return redirect('login')
+        
 
-# def product_list(request, category_slug=None):
-#     category = None
-#     categories = Category.objects.all()
-#     products = Product.objects.filter(available=True)
-#     if category_slug:
-#         category = get_object_or_404(Category, slug=category_slug)
-#         products = products.filter(category=category)
-#     context = {'category': category, 'categories': categories, 'products': products}
-#     return render(request, 'shop/product/list.html', context)
 
-# def product_detail(request, id, slug):
-#     product = get_object_or_404(Product, id=id, slug=slug, available=True)
-#     #cart_product_form = CartAddProductForm()
-#     context = {'product': product}
-#     return render(request, 'shop/product/detail.html', context)
+def remove_from_cart(request, cart_item_id):
+    # Fetch the cart item
+    cart_item = get_object_or_404(CartItem, id=cart_item_id)
+
+    # Check if the cart item belongs to the current user
+    if cart_item.user == request.user:
+        # Remove the cart item
+        cart_item.delete()
+    else:
+        # Handle unauthorized access (optional)
+        pass
+
+    return redirect('cart')    
 
 
 

@@ -50,9 +50,12 @@
 						<p class="single-product-pricing"><span>Per Kg</span> {{ product.price }}</p>
 						<p>{{ product.description}} </p>
 						<div class="single-product-form">
-							<form action="cart" method="POST" >
+							<form action="{% url 'add_to_cart' product.id %}" method="POST" >
 							     {% csrf_token %}
-								<button  class="cart-btn" type="submit"><i class="fas fa-shopping-cart"></i>Add to Cart</button>
+								<button  class="boxed-btn" type="submit" style="font-family: 'Poppins', sans-serif;
+											display: inline-block;
+											background-color: #F28123;
+											color: #fff;padding: 10px 20px;border-radius:20px;border:1 px black"><i class="fas fa-shopping-cart"></i>Add to Cart</button>
 							</form>
 							
 							
